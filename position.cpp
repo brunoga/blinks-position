@@ -28,12 +28,8 @@ void Reset() { coordinates_ = Coordinates(0, 0); }
 
 Coordinates Local() { return coordinates_; }
 
-Coordinates Remote(byte relative_local_face, int8_t remote_x, int8_t remote_y) {
-  return from_face_and_coordinates(relative_local_face, remote_x, remote_y);
-}
-
-Coordinates AtFace(byte local_global_relative_face) {
-  return from_face_and_coordinates(local_global_relative_face, coordinates_.X(),
+Coordinates Remote(byte relative_local_face) {
+  return from_face_and_coordinates(relative_local_face, coordinates_.X(),
                                    coordinates_.Y());
 }
 
