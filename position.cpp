@@ -3,30 +3,38 @@
 namespace position {
 
 // Lookup array for map traversal. Even coordinates are X, odd are Y. Each pair
-// is the offset to be applied when moving through a specific global relative
+// is the offset to be applied when moving through a specific local relative
 // face.
 static const int8_t traversal_[] = {0, -1, -1, 0, -1, 1, 0, 1, 1, 0, 1, -1};
 
 static Coordinates coordinates_;
 
-static int8_t compute_z_coordinate(int8_t x, int8_t y) { return -(x + y); }
+static Coordinates from_face_and_coordinates(byte relative_local_face, int8_t x,
+                                             int8_t y) {
+  byte x_index = relative_local_face * 2;
 
-void Set(int8_t x, int8_t y) {
-  coordinates_.x = x;
-  coordinates_.y = y;
-  coordinates_.z = compute_z_coordinate(x, y);
+  int8_t x1 = x + traversal_[x_index];
+  int8_t y1 = y + traversal_[x_index + 1];
+
+  return Coordinates(x1, y1);
 }
 
-Coordinates Get() { return coordinates_; }
+void Setup(byte relative_local_face, int8_t remote_x, int8_t remote_y) {
+  coordinates_ =
+      from_face_and_coordinates(relative_local_face, remote_x, remote_y);
+}
 
-Coordinates AtFace(byte global_relative_face) {
-  byte x_index = global_relative_face * 2;
+void Reset() { coordinates_ = Coordinates(0, 0); }
 
-  int8_t x = coordinates_.x + traversal_[x_index];
-  int8_t y = coordinates_.y + traversal_[x_index + 1];
-  int8_t z = compute_z_coordinate(x, y);
+Coordinates Local() { return coordinates_; }
 
-  return Coordinates{x, y, z};
+Coordinates Remote(byte relative_local_face, int8_t remote_x, int8_t remote_y) {
+  return from_face_and_coordinates(relative_local_face, remote_x, remote_y);
+}
+
+Coordinates AtFace(byte local_global_relative_face) {
+  return from_face_and_coordinates(local_global_relative_face, coordinates_.X(),
+                                   coordinates_.Y());
 }
 
 }  // namespace position
