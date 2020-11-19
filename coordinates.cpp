@@ -1,16 +1,30 @@
 #include "coordinates.h"
 
+#include <stdlib.h>
+
 namespace position {
 
-Coordinates::Coordinates() : Coordinates(0, 0) {}
+namespace coordinates {
 
-Coordinates::Coordinates(int8_t x, int8_t y) {
-  x_ = x;
-  y_ = y;
+int8_t Z(const Coordinates& coordinates) {
+  return -(coordinates.x + coordinates.y);
 }
 
-int8_t Coordinates::X() const { return x_; }
-int8_t Coordinates::Y() const { return y_; }
-int8_t Coordinates::Z() const { return -(x_ + y_); }
+byte Distance(const Coordinates& coordinates1,
+              const Coordinates& coordinates2) {
+  byte delta_x = abs(coordinates1.x - coordinates2.x);
+  byte delta_y = abs(coordinates1.y - coordinates2.y);
+  byte delta_z = abs(Z(coordinates1) - Z(coordinates2));
+
+  if (delta_x >= delta_y && delta_x >= delta_z) {
+    return delta_x;
+  } else if (delta_y >= delta_z) {
+    return delta_y;
+  } else {
+    return delta_z;
+  }
+}
+
+}  // namespace coordinates
 
 }  // namespace position
