@@ -3,13 +3,11 @@
 
 #include <blinklib.h>
 
-#define POSITION_INVALID_COORDINATE -128
-
 namespace position {
 
 struct Coordinates {
-  int8_t x = POSITION_INVALID_COORDINATE;
-  int8_t y = POSITION_INVALID_COORDINATE;
+  int8_t x;
+  int8_t y;
 };
 
 namespace coordinates {
