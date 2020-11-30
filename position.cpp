@@ -35,7 +35,7 @@ Coordinates Remote(byte relative_local_face) {
                                    coordinates_.y);
 }
 
-byte __attribute__((noinline)) Distance(const Coordinates& coordinates) {
+byte __attribute__((noinline)) Distance(Coordinates coordinates) {
   return coordinates::Distance(Local(), coordinates);
 }
 

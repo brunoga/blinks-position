@@ -12,9 +12,9 @@ struct Coordinates {
 
 namespace coordinates {
 
-int8_t Z(const Coordinates& coordinates);
+int8_t Z(Coordinates coordinates);
 
-byte Distance(const Coordinates& coordinates1, const Coordinates& coordinates2);
+byte Distance(Coordinates coordinates1, Coordinates coordinates2);
 
 }  // namespace coordinates
 

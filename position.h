@@ -23,7 +23,7 @@ Coordinates Local();
 // relative_local_face.
 Coordinates Remote(byte relative_local_face);
 
-byte Distance(const Coordinates& coordinates);
+byte Distance(Coordinates coordinates);
 
 }  // namespace position
 

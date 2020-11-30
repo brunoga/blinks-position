@@ -6,12 +6,9 @@ namespace position {
 
 namespace coordinates {
 
-int8_t Z(const Coordinates& coordinates) {
-  return -(coordinates.x + coordinates.y);
-}
+int8_t Z(Coordinates coordinates) { return -(coordinates.x + coordinates.y); }
 
-byte Distance(const Coordinates& coordinates1,
-              const Coordinates& coordinates2) {
+byte Distance(Coordinates coordinates1, Coordinates coordinates2) {
   byte delta_x = abs(coordinates1.x - coordinates2.x);
   byte delta_y = abs(coordinates1.y - coordinates2.y);
   byte delta_z = abs(Z(coordinates1) - Z(coordinates2));
