@@ -16,6 +16,10 @@ void Setup(byte relative_local_face, int8_t remote_x, int8_t remote_y);
 // Resets the local Blink position to 0, 0, 0.
 void Reset();
 
+// Update position to the given x and y coordinates without changing the
+// orientation.
+void Update(int8_t x, int8_t y);
+
 // Returns the coordinates for the local Blink.
 Coordinates Local();
 
