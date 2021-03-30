@@ -1,7 +1,5 @@
 #include "coordinates.h"
 
-#include <stdlib.h>
-
 namespace position {
 
 namespace coordinates {
