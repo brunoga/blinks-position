@@ -1,5 +1,7 @@
 #include "coordinates.h"
 
+#define ABS(x) ((x) > 0 ? (x) : -(x))
+
 namespace position {
 
 namespace coordinates {
@@ -7,9 +9,9 @@ namespace coordinates {
 int8_t Z(Coordinates coordinates) { return -(coordinates.x + coordinates.y); }
 
 byte Distance(Coordinates coordinates1, Coordinates coordinates2) {
-  byte delta_x = abs(coordinates1.x - coordinates2.x);
-  byte delta_y = abs(coordinates1.y - coordinates2.y);
-  byte delta_z = abs(Z(coordinates1) - Z(coordinates2));
+  byte delta_x = ABS(coordinates1.x - coordinates2.x);
+  byte delta_y = ABS(coordinates1.y - coordinates2.y);
+  byte delta_z = ABS(Z(coordinates1) - Z(coordinates2));
 
   if (delta_x >= delta_y && delta_x >= delta_z) {
     return delta_x;
