@@ -15,7 +15,8 @@ static Coordinates from_face_and_coordinates(byte relative_exit_face, int8_t x,
                                              int8_t y) {
   byte x_index = relative_exit_face * 2;
 
-  return Coordinates{x + traversal_[x_index], y + traversal_[x_index + 1]};
+  return Coordinates{(int8_t)(x + traversal_[x_index]),
+                     (int8_t)(y + traversal_[x_index + 1])};
 }
 
 void Setup(byte relative_remote_face, int8_t remote_x, int8_t remote_y) {
