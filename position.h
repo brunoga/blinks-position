@@ -3,20 +3,31 @@
 
 #include <blinklib.h>
 
+#include "coordinates.h"
+
 namespace position {
 
-struct Coordinates {
-  int8_t x;
-  int8_t y;
-};
+// Set up the local Blink position based on the given parameters. The
+// relative_local_face parameter is the relative face number of the face we got
+// the given remote_x and remote_y coordinates from so it needs to be sent from
+// one Blink to the other in some way (either using face values or datagrams).
+void Setup(byte relative_local_face, int8_t remote_x, int8_t remote_y);
 
-Coordinates Local(byte relative_remote_face, Coordinates remote);
+// Resets the local Blink position to 0, 0, 0.
+void Reset();
 
-Coordinates Remote(byte relative_local_face, Coordinates local);
+// Update position to the given x and y coordinates without changing the
+// orientation.
+void Update(int8_t x, int8_t y);
 
-int8_t Z(Coordinates coordinates);
+// Returns the coordinates for the local Blink.
+Coordinates Local();
 
-byte Distance(Coordinates coordinates1, Coordinates coordinates2);
+// Returns the coordinates for the Blink connected to the given
+// relative_local_face.
+Coordinates Remote(byte relative_local_face);
+
+byte Distance(Coordinates coordinates);
 
 }  // namespace position
 

@@ -1,7 +1,5 @@
 #include "position.h"
 
-#define POSITION_ABS(x) ((x) > 0 ? (x) : -(x))
-
 namespace position {
 
 // Lookup array for map traversal. Even coordinates are X, odd are Y. Each pair
@@ -11,36 +9,37 @@ namespace position {
 // and the Z axis crosses faces 3/4 (increasing) and 0/1 (decreasing).
 static const int8_t traversal_[] = {0, 1, 1, 0, 1, -1, 0, -1, -1, 0, -1, 1};
 
-static Coordinates from_face_and_coordinates(byte relative_face,
-                                             Coordinates coordinates) {
-  byte x_index = relative_face * 2;
+static Coordinates coordinates_;
 
-  return Coordinates{(int8_t)(coordinates.x + traversal_[x_index]),
-                     (int8_t)(coordinates.y + traversal_[x_index + 1])};
+static Coordinates from_face_and_coordinates(byte relative_exit_face, int8_t x,
+                                             int8_t y) {
+  byte x_index = relative_exit_face * 2;
+
+  return Coordinates{(int8_t)(x + traversal_[x_index]),
+                     (int8_t)(y + traversal_[x_index + 1])};
 }
 
-Coordinates Local(byte relative_remote_face, Coordinates remote) {
-  return from_face_and_coordinates(relative_remote_face, remote);
+void Setup(byte relative_remote_face, int8_t remote_x, int8_t remote_y) {
+  coordinates_ =
+      from_face_and_coordinates(relative_remote_face, remote_x, remote_y);
 }
 
-Coordinates Remote(byte relative_local_face, Coordinates local) {
-  return from_face_and_coordinates(relative_local_face, local);
+void Reset() { coordinates_ = Coordinates{0, 0}; }
+
+void Update(int8_t x, int8_t y) {
+  coordinates_.x = x;
+  coordinates_.y = y;
 }
 
-int8_t Z(Coordinates coordinates) { return -coordinates.x - coordinates.y; }
+Coordinates Local() { return coordinates_; }
 
-byte Distance(Coordinates coordinates1, Coordinates coordinates2) {
-  byte delta_x = POSITION_ABS(coordinates1.x - coordinates2.x);
-  byte delta_y = POSITION_ABS(coordinates1.y - coordinates2.y);
-  byte delta_z = POSITION_ABS(Z(coordinates1) - Z(coordinates2));
+Coordinates Remote(byte relative_local_face) {
+  return from_face_and_coordinates(relative_local_face, coordinates_.x,
+                                   coordinates_.y);
+}
 
-  if (delta_x >= delta_y && delta_x >= delta_z) {
-    return delta_x;
-  } else if (delta_y >= delta_z) {
-    return delta_y;
-  } else {
-    return delta_z;
-  }
+byte __attribute__((noinline)) Distance(Coordinates coordinates) {
+  return coordinates::Distance(Local(), coordinates);
 }
 
 }  // namespace position
