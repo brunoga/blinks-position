@@ -12,6 +12,8 @@ struct Coordinates {
 
 namespace coordinates {
 
+Coordinates SourceToDestination(byte source_relative_face, Coordinates source);
+
 int8_t Z(Coordinates coordinates);
 
 byte Distance(Coordinates coordinates1, Coordinates coordinates2);

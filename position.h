@@ -21,7 +21,7 @@ void Reset();
 void Update(int8_t x, int8_t y);
 
 // Returns the coordinates for the local Blink.
-Coordinates Local();
+const Coordinates& Local();
 
 // Returns the coordinates for the Blink connected to the given
 // relative_local_face.
