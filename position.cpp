@@ -11,8 +11,8 @@ static const int8_t traversal_[] = {0, 1, 1, 0, 1, -1, 0, -1, -1, 0, -1, 1};
 
 static Coordinates coordinates_;
 
-static Coordinates from_face_and_coordinates(byte relative_exit_face, int8_t x,
-                                             int8_t y) {
+static Coordinates __attribute__((noinline))
+from_face_and_coordinates(byte relative_exit_face, int8_t x, int8_t y) {
   byte x_index = relative_exit_face * 2;
 
   return Coordinates{(int8_t)(x + traversal_[x_index]),
@@ -38,7 +38,7 @@ Coordinates Remote(byte relative_local_face) {
                                    coordinates_.y);
 }
 
-byte __attribute__((noinline)) Distance(Coordinates coordinates) {
+byte Distance(Coordinates coordinates) {
   return coordinates::Distance(Local(), coordinates);
 }
 
