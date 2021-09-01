@@ -7,26 +7,22 @@
 
 namespace position {
 
-// Set up the local Blink position based on the given parameters. The
-// relative_local_face parameter is the relative face number of the face we got
-// the given remote_x and remote_y coordinates from so it needs to be sent from
-// one Blink to the other in some way (either using face values or datagrams).
-void Setup(byte relative_local_face, int8_t remote_x, int8_t remote_y);
+// Sets the local Blink position to the given coordinates.
+void SetCoordinates(Coordinates coordinates);
 
-// Resets the local Blink position to 0, 0, 0.
-void Reset();
+// Returns the coordinates for the local Blink position.
+Coordinates GetCoordinates();
 
-// Update position to the given x and y coordinates without changing the
-// orientation.
-void Update(int8_t x, int8_t y);
+// Computes the local Blink position coordinates based on the given parameters.
+// The relative_local_face parameter is the relative face number of the face we
+// got the given remote_coordinates from so it needs to be sent from one Blink
+// to the other in some way (either using face values or datagrams). This does
+// not change the current position.
+Coordinates ComputeCoordinates(byte relative_local_face,
+                               Coordinates remote_coordinates);
 
-// Returns the coordinates for the local Blink.
-Coordinates Local();
-
-// Returns the coordinates for the Blink connected to the given
-// relative_local_face.
-Coordinates Remote(byte relative_local_face);
-
+// Computes the axial distance between the local Blink coordinates and the given
+// coordinates.
 byte Distance(Coordinates coordinates);
 
 }  // namespace position
