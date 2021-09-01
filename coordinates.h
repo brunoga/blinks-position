@@ -12,8 +12,10 @@ struct Coordinates {
 
 namespace coordinates {
 
+// Returns the axial Z coordinate of the given coordinates.
 int8_t Z(Coordinates coordinates);
 
+// Computes the axial distance between the 2 given coordinates.
 byte Distance(Coordinates coordinates1, Coordinates coordinates2);
 
 }  // namespace coordinates
